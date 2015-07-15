@@ -1,0 +1,24 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+    <h3>Proxy status</h3>
+    <button type="button" class="btn btn-primary" ng-click="newProxy()">New Proxy</button>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Owner</th>
+                    <th>Type</th>
+                    <th>Port</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="proxy in proxys">
+                    <td>{{proxy.owner}}</td>
+                    <td>{{proxy.type}}</td>
+                    <td>{{proxy.port}}</td>
+                    <td><button class="btn btn-primary"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button></td>
+                </tr>
+        </table>
+    </div>
+</div>

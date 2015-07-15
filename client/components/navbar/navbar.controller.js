@@ -5,6 +5,9 @@ angular.module('proxyManagerApp')
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
+    },{
+      'title': 'Proxy',
+      'link': '/proxy'
     }];
 
     $scope.isCollapsed = true;

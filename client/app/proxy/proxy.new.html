@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <button ng-if="modal.dismissable" type="button" ng-click="$dismiss()" class="close">&times;</button>
+    <h4 ng-if="modal.title" ng-bind="modal.title" class="modal-title"></h4>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label>Your name:</label>
+            <input type="text" class="form-control" ng-model="$data.owner" placeholder="whatever">
+        </div>
+        <div class="form-group">
+            <label>Proxy type</label>
+            <select class="form-control" ng-model="$data.type" ng-init="$data.type = 'shadowsocks'">
+                <option>shadowsocks</option>
+            </select>
+        </div>
+        <p>{{$data}}</p>
+    </form>
+</div>
+<div class="modal-footer">
+    <button ng-repeat="button in modal.buttons" ng-class="button.classes" ng-click="button.click($data)" ng-bind="button.text" class="btn"></button>
+</div>
