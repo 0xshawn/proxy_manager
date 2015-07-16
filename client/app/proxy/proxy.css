@@ -1,0 +1,47 @@
+body {
+    background-color:#eef0f3;
+}
+.cont{
+    position: relative;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.05);
+    margin: 0 auto;
+    padding: 30px;
+    width: 400px;
+}
+.link{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    position: absolute;
+    bottom:-35px;
+    right:25px
+
+}
+
+
+.ladda-button.green,
+.ladda-button.green:hover {
+    background-color: #2aca76;
+}
+.ladda-button.red,
+.ladda-button.red:hover {
+    background-color: #ea8557;
+}
+
+hr {
+    border: 0;
+    background-color: #e6e6e6;
+    height: 1px;
+    margin: 30px -30px;
+}
+
+.loadingState {
+    color: #333;
+    font-weight: bold;
+    margin-left: 20px;
+    font-family: "Helvetica Neue",sans-serif;
+}
+
+.loadingState input {
+    margin: 0;
+}
