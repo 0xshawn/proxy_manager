@@ -1,20 +1,13 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <div class="container">
     <h3>Proxy status</h3>
-    <button type="button" class="btn btn-primary" ng-click="newProxy()">New Proxy</button>
-
-    <div class="cont">
-        <button ng-click="showLoading();" ladda-button="laddaLoading" data-style="expand-right" class="green ladda-button" ng-disabled="laddaLoading"><span class="ladda-label">Submit</span>
-        </button>
-        <label class="loadingState">
-            <input type="checkbox" ng-model="laddaLoading" /> laddaLoading</label>
-        <hr />
-        <button ng-click="loadingWithProgress();" ladda-button="laddaLoadingBar" data-style="zoom-in" class="red ladda-button"><span class="ladda-label">Submit</span>
-        </button>
-        <a class="link" target="_blank" href="https://github.com/sachinchoolur/ladda-angular">View on Github</a>
-    </div>
-
-
+    <button type="button" class="btn btn-primary" ng-click="newProxy()">
+        <span class="glyphicon glyphicon-edit"></span> New Proxy
+    </button>
+    <button class="btn btn-primary" ng-click="start_or_stop()">
+        <span class="glyphicon glyphicon-refresh"></span> Refresh
+    </button>
+    <progressbar class="progress-striped active" max="200" value="166" type="danger"><i>166 / 200</i></progressbar>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -31,7 +24,7 @@
                     <td>{{proxy.type}}</td>
                     <td>{{proxy.port}}</td>
                     <td>
-                        <button class="btn btn-primary" ng-click="start_or_stop()">
+                        <button ladda="loading" class="btn btn-warning" data-style="zoom-out" ng-click="clickBtn()">
                             <span class="glyphicon glyphicon-play"></span>
                         </button>
                     </td>
