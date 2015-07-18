@@ -4,10 +4,10 @@
     <button type="button" class="btn btn-primary" ng-click="newProxy()">
         <span class="glyphicon glyphicon-edit"></span> New Proxy
     </button>
-    <button class="btn btn-primary" ng-click="start_or_stop()">
+    <button class="btn btn-primary" ladda="refresh_status" data-style="expand-right" ng-click="refresh()">
         <span class="glyphicon glyphicon-refresh"></span> Refresh
     </button>
-    <progressbar class="progress-striped active" max="200" value="166" type="danger"><i>166 / 200</i></progressbar>
+    <progressbar class="progress-striped active" max="200" value="166" type="danger"></progressbar>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -22,10 +22,10 @@
                 <tr ng-repeat="proxy in proxys">
                     <td>{{proxy.owner}}</td>
                     <td>{{proxy.type}}</td>
-                    <td>{{proxy.port}}</td>
+                    <td>{{proxy.port || '-'}}</td>
                     <td>
-                        <button ladda="loading" class="btn btn-warning" data-style="zoom-out" ng-click="clickBtn()">
-                            <span class="glyphicon glyphicon-play"></span>
+                        <button ladda="proxy.loading" class="{{status_button_class(proxy)}}" data-style="zoom-out" ng-click="start_or_stop_proxy(proxy)">
+                            <span class="glyphicon glyphicon-play"></span> {{proxy_status(proxy) || 'unknown'}}
                         </button>
                     </td>
                 </tr>
