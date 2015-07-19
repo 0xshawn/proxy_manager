@@ -12,7 +12,7 @@
 
 var _ = require('lodash');
 var Proxy = require('./proxy.model');
-var Process = require('./proxy.Process');
+var ProxyManage = require('./proxy.manage');
 
 // Get list of proxys
 exports.index = function(req, res) {
@@ -97,6 +97,7 @@ exports.start = function(req, res) {
     }
 
     // start proxy
+    ProxyManage.start();
 
   });
 };
