@@ -15,8 +15,8 @@ var Proxy = require('./proxy.model');
 var ProxyManage = require('./proxy.manage');
 
 // Get list of proxys
-exports.index = function(req, res) {
-  Proxy.find(function(err, proxys) {
+exports.index = function (req, res) {
+  Proxy.find(function (err, proxys) {
     if (err) {
       return handleError(res, err);
     }
@@ -25,8 +25,8 @@ exports.index = function(req, res) {
 };
 
 // Get a single proxy
-exports.show = function(req, res) {
-  Proxy.findById(req.params.id, function(err, proxy) {
+exports.show = function (req, res) {
+  Proxy.findById(req.params.id, function (err, proxy) {
     if (err) {
       return handleError(res, err);
     }
@@ -38,8 +38,12 @@ exports.show = function(req, res) {
 };
 
 // Creates a new proxy in the DB.
-exports.create = function(req, res) {
-  Proxy.create(req.body, function(err, proxy) {
+exports.create = function (req, res) {
+  var proxy = req.body;
+  proxy.password = randomString(6);
+  proxy.encryption = 'aes-256-cfb';
+  proxy.server = process.env.IP || '';
+  Proxy.create(proxy, function (err, proxy) {
     if (err) {
       return handleError(res, err);
     }
@@ -48,11 +52,11 @@ exports.create = function(req, res) {
 };
 
 // Updates an existing proxy in the DB.
-exports.update = function(req, res) {
+exports.update = function (req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Proxy.findById(req.params.id, function(err, proxy) {
+  Proxy.findById(req.params.id, function (err, proxy) {
     if (err) {
       return handleError(res, err);
     }
@@ -60,7 +64,7 @@ exports.update = function(req, res) {
       return res.send(404);
     }
     var updated = _.merge(proxy, req.body);
-    updated.save(function(err) {
+    updated.save(function (err) {
       if (err) {
         return handleError(res, err);
       }
@@ -70,15 +74,15 @@ exports.update = function(req, res) {
 };
 
 // Deletes a proxy from the DB.
-exports.destroy = function(req, res) {
-  Proxy.findById(req.params.id, function(err, proxy) {
+exports.destroy = function (req, res) {
+  Proxy.findById(req.params.id, function (err, proxy) {
     if (err) {
       return handleError(res, err);
     }
     if (!proxy) {
       return res.send(404);
     }
-    proxy.remove(function(err) {
+    proxy.remove(function (err) {
       if (err) {
         return handleError(res, err);
       }
@@ -87,8 +91,8 @@ exports.destroy = function(req, res) {
   });
 };
 
-exports.start = function(req, res) {
-  Proxy.findById(req.params.id, function(err, proxy) {
+exports.start = function (req, res) {
+  Proxy.findById(req.params.id, function (err, proxy) {
     if (err) {
       return handleError(res, err);
     }
@@ -97,7 +101,7 @@ exports.start = function(req, res) {
     }
 
     // start proxy
-    ProxyManage.start_proxy(proxy, function(port) {
+    ProxyManage.start_proxy(proxy, function (port) {
       proxy.status = true;
       proxy.save();
       return res.send(200);
@@ -105,8 +109,8 @@ exports.start = function(req, res) {
   });
 };
 
-exports.stop = function(req, res) {
-  Proxy.findById(req.params.id, function(err, proxy) {
+exports.stop = function (req, res) {
+  Proxy.findById(req.params.id, function (err, proxy) {
     if (err) {
       return handleError(res, err);
     }
@@ -115,7 +119,7 @@ exports.stop = function(req, res) {
     }
 
     // stop proxy
-    ProxyManage.stop_proxy(proxy, function(port) {
+    ProxyManage.stop_proxy(proxy, function (port) {
       proxy.port = undefined;
       proxy.status = false;
       proxy.save();
@@ -128,3 +132,14 @@ exports.stop = function(req, res) {
 function handleError(res, err) {
   return res.send(500, err);
 }
+
+var randomString = function (length) {
+  var length = length || 8;
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < length; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+};

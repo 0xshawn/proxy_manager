@@ -8,7 +8,10 @@ var ProxySchema = new Schema({
   type: String,
   port: Number,
   status: Boolean,
-  command: String
+  command: String,
+  password: String,
+  encryption: String,
+  server: String
 });
 
 module.exports = mongoose.model('Proxy', ProxySchema);

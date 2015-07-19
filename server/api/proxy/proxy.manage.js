@@ -2,12 +2,12 @@
 
 var exec = require('child_process').exec;
 
-exports.start_proxy = function(proxy, callback) {
+exports.start_proxy = function (proxy, callback) {
   proxy.port = getRandomNumber(20000, 30000);
   var cmd = 'lsof -i ' + proxy.ort;
-  exec(cmd, function(error, stdout, stderr) {
+  exec(cmd, function (error, stdout, stderr) {
     if (stdout == '') {
-      manage_shadowsocks_with_port(proxy.port, 'start');
+      manage_shadowsocks(proxy, 'start');
     } else {
       start_proxy(proxy);
     }
@@ -15,16 +15,28 @@ exports.start_proxy = function(proxy, callback) {
   callback();
 }
 
-exports.stop_proxy = function(proxy, callback) {
-  manage_shadowsocks_with_port(proxy.port, 'stop');
+exports.stop_proxy = function (proxy, callback) {
+  manage_shadowsocks(proxy, 'stop');
   callback();
 }
 
-function manage_shadowsocks_with_port(port, start_or_stop) {
-  var pid_file = '/tmp/ss-' + port + '.pid';
-  var log_file = ' /tmp/ss-' + port + '.log';
-  var cmd = "ssserver -s 0.0.0.0 -p " + port + " -k happy -m aes-256-cfb -t 1000 " +
-    "--pid-file " + pid_file + " --log-file " + log_file + " -d " + start_or_stop;
+function manage_shadowsocks(proxy, start_or_stop) {
+  var pid_file = '/tmp/ss-' + proxy.port + '.pid',
+    log_file = ' /tmp/ss-' + proxy.port + '.log',
+    port = proxy.port,
+    password = proxy.password,
+    encryption = proxy.encryption,
+    server = proxy.server;
+
+  var cmd = "ssserver -s " + server +
+    " -p " + port +
+    " -k " + password +
+    " -m " + encryption +
+    " -t 1000 " +
+    " --pid-file " + pid_file +
+    " --log-file " + log_file +
+    " -d " + start_or_stop;
+    console.log(cmd);
   exec(cmd);
 }
 

@@ -29,10 +29,4 @@ Thing.find({}).remove(function() {
     name : 'Deployment Ready',
     info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
   });
-  Proxy.create({
-    owner: "shown",
-    type: "shadowsocks",
-    port: 23434,
-    status: false
-  });
 });
