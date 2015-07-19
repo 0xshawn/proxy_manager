@@ -100,12 +100,45 @@ angular.module('proxyManagerApp')
                     newModal.dismiss(e);
                   }
                 }]
-              }, data
+              },
+              data
             }, 'modal-primary', 'app/proxy/proxy.new.html');
 
             newModal.result.then(function (data) {
               callback(data);
             });
+          };
+        }
+      },
+      show: {
+        proxy: function (proxy) {
+          return function () {
+            var args = Array.prototype.slice.call(arguments),
+              name = args.shift(),
+              data = proxy,
+              newModal;
+            newModal = openModal({
+              modal: {
+                dismissable: true,
+                title: 'Configure Your Client',
+                buttons: [{
+                  classes: 'btn-primary',
+                  text: 'Confirm',
+                  click: function (e) {
+                    newModal.close(e);
+                  }
+                }, {
+                  classes: 'btn-default',
+                  text: 'Cancel',
+                  click: function (e) {
+                    newModal.dismiss(e);
+                  }
+                }]
+              },
+              data
+            }, 'modal-primary', 'app/proxy/proxy.show.html');
+
+            newModal.result.then(function (data) {});
           };
         }
       }
