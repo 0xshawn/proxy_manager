@@ -20,7 +20,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="proxy in proxys">
-                    <td>{{proxy.owner}}</td>
+                    <td>{{getUserName(proxy)}}</td>
                     <td>{{proxy.type}}</td>
                     <td>{{proxy.port || '-'}}</td>
                     <td>

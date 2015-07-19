@@ -1,18 +1,25 @@
 'use strict';
 
 angular.module('proxyManagerApp')
-  .controller('NavbarCtrl', function ($scope, $location) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
-    },{
+    }, {
       'title': 'Proxy',
       'link': '/proxy'
     }];
 
     $scope.isCollapsed = true;
+    $scope.isLoggedIn = Auth.isLoggedIn;
+    $scope.isAdmin = Auth.isAdmin;
+    $scope.getCurrentUser = Auth.getCurrentUser;
 
-    $scope.isActive = function(route) {
+    $scope.logout = function () {
+      Auth.logout();
+      $location.path('/login');
+    };
+    $scope.isActive = function (route) {
       return route === $location.path();
     };
   });

@@ -1,7 +1,20 @@
 'use strict';
 
 angular.module('proxyManagerApp')
-  .controller('ProxyCtrl', function ($scope, $http, Modal, Proxy, Util, $interval, $timeout) {
+  .controller('ProxyCtrl', function ($scope, $location, $http, Modal, Proxy, Util, $interval, $timeout, Auth, User) {
+    if (Auth.isLoggedIn() === false) {
+      $location.path('/login');
+    }
+
+    $scope.users = User.query();
+
+    $scope.getUserName = function (proxy) {
+      for (var i = 0; i < $scope.users.length; i ++) {
+        if ($scope.users[i].id === proxy.owner) {
+          return $scope.users[i].name;
+        }
+      }
+    };
     $scope.refresh = function () {
       $scope.refreshStatus = true;
       $scope.proxys = Proxy.query(function () {
@@ -13,7 +26,9 @@ angular.module('proxyManagerApp')
 
     var saveProxy = function (proxy) {
       if (!('owner' in proxy)) {
-        proxy['owner'] = Util.randomString(10);
+        proxy['owner'] = Auth.getCurrentUser.id;
+        console.log(Auth.getCurrentUser);
+        console.log(proxy);
       }
       var newProxy = new Proxy(proxy);
       newProxy.$save();
