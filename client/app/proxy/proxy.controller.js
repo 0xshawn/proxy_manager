@@ -1,17 +1,17 @@
 'use strict';
 
 angular.module('proxyManagerApp')
-  .controller('ProxyCtrl', function($scope, $http, Modal, Proxy, Util, $interval, $timeout) {
-    $scope.refresh = function() {
+  .controller('ProxyCtrl', function ($scope, $http, Modal, Proxy, Util, $interval, $timeout) {
+    $scope.refresh = function () {
       $scope.refresh_status = true;
-      $scope.proxys = Proxy.query(function() {
-        $timeout(function() {
-        $scope.refresh_status = false;
+      $scope.proxys = Proxy.query(function () {
+        $timeout(function () {
+          $scope.refresh_status = false;
         }, 2000);
       });
     };
     // $scope.animationsEnabled = true;
-    var saveProxy = function(proxy) {
+    var saveProxy = function (proxy) {
       if (!('owner' in proxy)) {
         proxy['owner'] = Util.randomString(10);
       }
@@ -20,19 +20,19 @@ angular.module('proxyManagerApp')
       $scope.refresh();
     };
 
-    $scope.newProxy = function() {
+    $scope.newProxy = function () {
       Modal.new.proxy(saveProxy)();
     };
 
-    $scope.start_or_stop = function() {
+    $scope.start_or_stop = function () {
       console.log('button click');
     };
 
     $scope.refresh();
 
-    $scope.start_or_stop_proxy = function(proxy) {
+    $scope.start_or_stop_proxy = function (proxy) {
       proxy.loading = true; // start loading
-      $timeout(function() {
+      $timeout(function () {
         if (proxy.status === true) {
           stop_proxy(proxy);
         } else {
@@ -42,7 +42,7 @@ angular.module('proxyManagerApp')
       }, 2000);
     }
 
-    $scope.proxy_status = function(proxy) {
+    $scope.proxy_status = function (proxy) {
       if (proxy.status === true) {
         return "Running";
       } else {
@@ -59,10 +59,15 @@ angular.module('proxyManagerApp')
     };
 
     var start_proxy = function (proxy) {
-      console.log('start proxy');
+      proxy.$start(function (proxy, success, error) {
+        $scope.refresh();
+      });
     };
 
     var stop_proxy = function (proxy) {
-      console.log('stop proxy');
+      console.log(proxy);
+      proxy.$stop(function (proxy, success, error) {
+        $scope.refresh();
+      });
     };
   });

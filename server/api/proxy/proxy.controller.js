@@ -97,10 +97,33 @@ exports.start = function(req, res) {
     }
 
     // start proxy
-    ProxyManage.start();
-
+    ProxyManage.start_proxy(proxy, function(port) {
+      proxy.status = true;
+      proxy.save();
+      return res.send(200);
+    });
   });
 };
+
+exports.stop = function(req, res) {
+  Proxy.findById(req.params.id, function(err, proxy) {
+    if (err) {
+      return handleError(res, err);
+    }
+    if (!proxy) {
+      return res.send(404);
+    }
+
+    // stop proxy
+    ProxyManage.stop_proxy(proxy, function(port) {
+      proxy.port = undefined;
+      proxy.status = false;
+      proxy.save();
+      return res.send(200);
+    });
+  });
+};
+
 
 function handleError(res, err) {
   return res.send(500, err);
