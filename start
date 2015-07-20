@@ -1,0 +1,11 @@
+#!/bin/bash
+
+export IP=your-ip
+export NODE_ENV=production
+export PORT=3000
+git pull
+grunt build --force
+
+cd dist;
+ln -s ../node_modules .
+forever start server/app.js
