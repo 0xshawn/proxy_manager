@@ -36,7 +36,6 @@ function manage_shadowsocks(proxy, start_or_stop) {
     " --pid-file " + pid_file +
     " --log-file " + log_file +
     " -d " + start_or_stop;
-    console.log(cmd);
   exec(cmd);
 }
 

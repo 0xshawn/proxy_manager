@@ -13,14 +13,29 @@
 var _ = require('lodash');
 var Proxy = require('./proxy.model');
 var ProxyManage = require('./proxy.manage');
+var User = require('../user/user.model');
+var auth = require('../../auth/auth.service');
 
 // Get list of proxys
 exports.index = function (req, res) {
-  Proxy.find(function (err, proxys) {
+  Proxy.find(function (err, proxies) {
     if (err) {
       return handleError(res, err);
     }
-    return res.json(200, proxys);
+    return res.json(200, proxies);
+  });
+};
+
+// get proxies of me
+exports.me = function (req, res) {
+  var userId = req.user._id;
+  Proxy.find({
+    owner: userId
+  }, function (err, proxies) {
+    if (err) {
+      return handleError(res, err);
+    }
+    return res.json(200, proxies);
   });
 };
 
@@ -128,12 +143,11 @@ exports.stop = function (req, res) {
   });
 };
 
-
 function handleError(res, err) {
   return res.send(500, err);
 }
 
-var randomString = function (length) {
+function randomString(length) {
   var length = length || 8;
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

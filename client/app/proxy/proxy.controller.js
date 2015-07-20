@@ -6,30 +6,26 @@ angular.module('proxyManagerApp')
       $location.path('/login');
     }
 
-    $scope.users = User.query();
-
-    $scope.getUserName = function (proxy) {
-      for (var i = 0; i < $scope.users.length; i ++) {
-        if ($scope.users[i].id === proxy.owner) {
-          return $scope.users[i].name;
-        }
-      }
-    };
     $scope.refresh = function () {
       $scope.refreshStatus = true;
-      $scope.proxys = Proxy.query(function () {
-        $timeout(function () {
-          $scope.refreshStatus = false;
-        }, 2000);
-      });
+      if (!Auth.isAdmin()) {
+        $scope.proxies = Proxy.me(function () {
+          $timeout(function () {
+            $scope.refreshStatus = false;
+          }, 1000);
+        });
+      } else {
+        $scope.proxies = Proxy.me(function () {
+          $timeout(function () {
+            $scope.refreshStatus = false;
+          }, 1000);
+        });
+      }
     };
 
     var saveProxy = function (proxy) {
-      if (!('owner' in proxy)) {
-        proxy['owner'] = Auth.getCurrentUser.id;
-        console.log(Auth.getCurrentUser);
-        console.log(proxy);
-      }
+      proxy.owner = Auth.getCurrentUser()._id;
+      proxy.summary = proxy.summary || Util.randomString(10);
       var newProxy = new Proxy(proxy);
       newProxy.$save();
       $scope.refresh();
@@ -67,9 +63,9 @@ angular.module('proxyManagerApp')
 
     $scope.statusButtonClass = function (proxy) {
       if (proxy.status === true) {
-        return "btn btn-success ladda-button btn-xs";
+        return "btn btn-success ladda-button btn-sm";
       } else {
-        return "btn btn-danger  ladda-button btn-xs";
+        return "btn btn-danger  ladda-button btn-sm";
       }
     };
 
@@ -84,11 +80,24 @@ angular.module('proxyManagerApp')
         $scope.refresh();
       });
     };
+
+    $scope.deleteProxy = function (proxy) {
+      if (Auth.isAdmin() || (Auth.getCurrentUser()._id === proxy.owner)) {
+        Modal.confirm.delete(function (proxy) {
+          stopProxy(proxy);
+          proxy.$delete();
+          $scope.refresh();
+        })(proxy.summary, proxy);
+      } else {
+        Modal.confirm.warning("Others' proxy is not allowed to delete")();
+      }
+    };
+
     $scope.docButtonClass = function (proxy) {
       if (proxy.status) {
-        return "btn btn-info btn-xm";
+        return "btn btn-info btn-sm";
       } else {
-        return "btn btn-default btn-xm";
+        return "btn btn-default btn-sm";
       }
     };
     $scope.docbuttonDisabled = function (proxy) {

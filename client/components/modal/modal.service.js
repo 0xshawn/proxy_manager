@@ -69,8 +69,45 @@ angular.module('proxyManagerApp')
             }, 'modal-danger');
 
             deleteModal.result.then(function (event) {
+              console.log(event);
+              console.log(args);
               del.apply(event, args);
             });
+          };
+        },
+        warning: function (message) {
+          /**
+           * Open a delete confirmation modal
+           * @param  {String} name   - name or info to show on modal
+           * @param  {All}           - any additional args are passed staight to del callback
+           */
+          return function () {
+            var args = Array.prototype.slice.call(arguments),
+              name = args.shift(),
+              warningModal;
+
+            warningModal = openModal({
+              modal: {
+                dismissable: true,
+                title: 'Warning',
+                html: '<p>' + message + '</p>',
+                buttons: [{
+                  classes: 'btn-warning',
+                  text: 'Back',
+                  click: function (e) {
+                    warningModal.close(e);
+                  }
+                }, {
+                  classes: 'btn-default',
+                  text: 'Cancel',
+                  click: function (e) {
+                    warningModal.dismiss(e);
+                  }
+                }]
+              }
+            }, 'modal-warning');
+
+            warningModal.result.then(function (event) {});
           };
         }
       },

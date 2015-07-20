@@ -2,16 +2,27 @@
 
 angular.module('proxyManagerApp')
   .factory('Proxy', function ($resource) {
-    return $resource('/api/proxies/:id', {
+    return $resource('/api/proxies/:id/:action', {
       id: '@_id'
     }, {
+      'me': {
+        method: 'GET',
+        params: {
+          id: 'me'
+        },
+        isArray: true
+      },
       'start': {
         method: 'GET',
-        url: '/api/proxies/:id/start'
+        params: {
+          action: 'start'
+        }
       },
       'stop': {
         method: 'GET',
-        url: '/api/proxies/:id/stop'
+        params: {
+          action: 'stop'
+        }
       }
     });
   });

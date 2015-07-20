@@ -19,4 +19,3 @@
 	git pull
 	grunt build --force
 	./start
-	

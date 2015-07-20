@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 
 var ProxySchema = new Schema({
   owner: Schema.Types.ObjectId,
+  summary: String,
   type: String,
   port: Number,
   status: Boolean,
