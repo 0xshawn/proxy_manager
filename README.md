@@ -6,7 +6,7 @@ version 0.0.1
 2. install npm
 3. following script:
   npm install
-  sudo npm install forever bower -g
+  sudo npm install forever bower grunt grunt-cli -g
   bower install
 
 ## Start script
