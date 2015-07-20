@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export IP=your-ip
+export PROXY_IP=106.186.126.165
+export IP=127.0.0.1
 export NODE_ENV=production
 export PORT=3000
 git pull
@@ -8,4 +9,4 @@ grunt build --force
 
 cd dist;
 ln -s ../node_modules .
-forever start server/app.js
+forever start server/app.js -l node.log
