@@ -61,7 +61,7 @@ exports.create = function (req, res) {
   var proxy = req.body;
   proxy.password = randomString(6);
   proxy.encryption = 'aes-256-cfb';
-  proxy.server = process.env.IP || '';
+  proxy.server = process.env.PROXY_IP || '';
   Proxy.create(proxy, function (err, proxy) {
     if (err) {
       return handleError(res, err);

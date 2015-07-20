@@ -13,7 +13,7 @@ version 0.0.2
 ./start script
 
 	#!/bin/bash
-	export IP=your-server-ip
+	export PROXY_IP=your-server-ip
 	export NODE_ENV=production
 	export PORT=3000
 	export MONGODB_URI=mongodb://localhost/proxymanager
