@@ -2,9 +2,12 @@
 version 0.0.1
 
 ## prepare
+1. install mongo
+2. install npm
+3. following script:
   npm install
+  sudo npm install forever bower -g
   bower install
-  npm install forever -g
 
 ## Start script
 ./start script
