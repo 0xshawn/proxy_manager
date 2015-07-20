@@ -14,6 +14,7 @@ version 0.0.2
 
 	#!/bin/bash
 	export PROXY_IP=your-server-ip
+	export IP=127.0.0.1 # With Nginx
 	export NODE_ENV=production
 	export PORT=3000
 	export MONGODB_URI=mongodb://localhost/proxymanager
