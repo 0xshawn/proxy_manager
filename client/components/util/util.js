@@ -10,7 +10,5 @@ angular.module('proxyManagerApp')
 
       return text;
     };
-    return {
-      randomString
-    };
+    return randomString;
   })

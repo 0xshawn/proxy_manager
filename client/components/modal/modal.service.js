@@ -136,7 +136,7 @@ angular.module('proxyManagerApp')
                   }
                 }]
               },
-              data
+              data: data
             }, 'modal-primary', 'app/proxy/proxy.new.html');
 
             newModal.result.then(function (data) {
