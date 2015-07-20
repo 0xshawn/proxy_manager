@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export IP=your-ip
+export PROXY_IP=106.186.126.165
 export NODE_ENV=production
 export PORT=3000
 git pull
