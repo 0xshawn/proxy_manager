@@ -93,7 +93,7 @@ angular.module('proxyManagerApp')
       if (proxy.status) {
         Modal.confirm.warning("Runing proxy is not allowed to delete, stop first.")();
       } else {
-        Modal.confirm.delete(deleteProxy(proxy))(proxy.summary, proxy);
+        Modal.confirm.delete(deleteProxy)(proxy.summary, proxy);
       }
     };
 
