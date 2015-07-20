@@ -45,12 +45,14 @@ angular.module('proxyManagerApp')
       proxy.loading = true; // start loading
       $timeout(function () {
         if (proxy.status === true) {
-          stopProxy(proxy);
+          stopProxy(proxy, function() {
+            $scope.refresh();
+          });
         } else {
           startProxy(proxy);
         }
         proxy.loading = false; // stop loading
-      }, 2000);
+      }, 1000);
     }
 
     $scope.proxyStatus = function (proxy) {
@@ -75,18 +77,20 @@ angular.module('proxyManagerApp')
       });
     };
 
-    var stopProxy = function (proxy) {
+    var stopProxy = function (proxy, callback) {
+      var cb = callback || angular.noop;
       proxy.$stop(function (proxy, success, error) {
-        $scope.refresh();
+        cb();
       });
     };
 
     $scope.deleteProxy = function (proxy) {
       if (Auth.isAdmin() || (Auth.getCurrentUser()._id === proxy.owner)) {
         Modal.confirm.delete(function (proxy) {
-          stopProxy(proxy);
-          proxy.$delete();
-          $scope.refresh();
+          stopProxy(proxy, function (proxy) {
+            proxy.$delete();
+            $scope.refresh();
+          });
         })(proxy.summary, proxy);
       } else {
         Modal.confirm.warning("Others' proxy is not allowed to delete")();
