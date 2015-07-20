@@ -9,4 +9,4 @@ grunt build --force
 
 cd dist;
 ln -s ../node_modules .
-forever start server/app.js
+forever start server/app.js -l node.log
