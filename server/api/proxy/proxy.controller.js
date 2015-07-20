@@ -30,7 +30,7 @@ exports.index = function (req, res) {
 exports.me = function (req, res) {
   var userId = req.user._id;
   var queryParams = {};
-  if (auth.hasRole('admin') === false) {
+  if (req.user.role !== 'admin') {
     queryParams = {
       owner: userId
     };
