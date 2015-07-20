@@ -1,0 +1,126 @@
+<div class="modal-header">
+    <button ng-if="modal.dismissable" type="button" ng-click="$dismiss()" class="close">&times;</button>
+    <h4 ng-if="modal.title" ng-bind="modal.title" class="modal-title"></h4>
+</div>
+<div class="modal-body">
+    <div class="bs-callout bs-callout-primary">
+        <h4>Your Proxy Setting</h4>
+        <br />
+        <div class="row">
+            <label class="col-sm-4">Server</label>
+            <label class="col-sm-6">{{data.server}}</label>
+        </div>
+        <div class="row">
+            <label class="col-sm-4">Port</label>
+            <label class="col-sm-6">{{data.port}}</label>
+        </div>
+        <div class="row">
+            <label class="col-sm-4">Password</label>
+            <label class="col-sm-6">{{data.password}}</label>
+        </div>
+        <div class="row">
+            <label class="col-sm-4">Encrypt Method</label>
+            <label class="col-sm-6">{{data.encryption}}</label>
+        </div>
+        <div class="row">
+            <label class="col-sm-4">Timeout (optional)</label>
+            <label class="col-sm-6">1000</label>
+        </div>
+    </div>
+    <tabset>
+        <tab heading="Android">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Step 1: Install APK</h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>
+                            Goto <a href="https://github.com/shadowsocks/shadowsocks-android/releases" target="_blank">Shadowsocks Android Releases</a> page and download the latest version of APK.
+                        </li>
+                        <li>Install the downloded apk into your Android.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Step 2: Configure Shadowsocks</h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>
+                            <p>Open Shadowsocks and configure with proxy setting.</p>
+                        </li>
+                        <li>Check
+                            <kbd>UDP Forwarding</kbd>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Step 3: Enable Proxy</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Touch the Toggle Button at the top right corner and enjoy.</p>
+                </div>
+            </div>
+        </tab>
+        <tab heading="iOS">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Not Provide</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Due some reason, proxy for iOS is not provided.</p>
+                </div>
+            </div>
+        </tab>
+        <tab heading="PC">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Step 1: Install Shadowsocks C# Client</h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>
+                            Download a <a href="" target="_blank">latest release</a>.
+                            <br />For >= Windows 8 or with .Net 4.0, download Shadowsocks-win-dotnet4.0-x.x.x.zip.
+                            <br />For &gt;=W indows 7 or with .Net 2.0, download Shadowsocks-win-x.x.x.zip.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Step 2: Usage</h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>Find Shadowsocks icon in the notification tray</li>
+                        <li>You can add multiple servers in servers menu </li>
+                        <li>Select Enable System Proxy menu to enable system proxy. Please disable other proxy addons in your browser, or set them to use system proxy </li>
+                        <li>You can also configure your browser proxy manually if you don't want to enable system proxy. Set Socks5 or HTTP proxy to 127.0.0.1:1080. You can change this port in Server -> Edit Servers </li>
+                        <li>You can change PAC rules by editing the PAC file. When you save the PAC file with any editor, Shadowsocks will notify browsers about the change automatically </li>
+                        <li>You can also update the PAC file from GFWList. Note your modifications to the PAC file will be lost. However you can put your rules in the user rule file for GFWList. Don't forget to update from GFWList again after you've edited the user rule </li>
+                        <li>For UDP, you need to use SocksCap or ProxyCap to force programs you want to proxy to tunnel over Shadowsocks</li>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </tab>
+        <tab heading="Mac">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">GoAgentX</h3>
+                </div>
+                <div class="panel-body">
+                    <p><a href="https://github.com/ohdarling/GoAgentX" target="_blank">GoAgentX</a> is a good choice.</p>
+                </div>
+            </div>
+        </tab>
+    </tabset>
+</div>
+<div class="modal-footer">
+    <button ng-repeat="button in modal.buttons" ng-class="button.classes" ng-click="button.click($data)" ng-bind="button.text" class="btn"></button>
+</div>

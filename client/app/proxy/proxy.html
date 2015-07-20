@@ -1,0 +1,42 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+    <h3>Proxy status</h3>
+    <button type="button" class="btn btn-primary" ng-click="newProxy()">
+        <span class="glyphicon glyphicon-edit"></span> New Proxy
+    </button>
+    <button class="btn btn-primary" ladda="refreshStatus" data-style="expand-right" ng-click="refresh()">
+        <span class="glyphicon glyphicon-refresh"></span> Refresh
+    </button>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Summary</th>
+                    <th>Type</th>
+                    <th>Port</th>
+                    <th>Status</th>
+                    <th>Configure Client</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="proxy in proxies">
+                    <td>{{proxy.summary}}</td>
+                    <td>{{proxy.type}}</td>
+                    <td>{{proxy.port || '-'}}</td>
+                    <td>
+                        <button ladda="proxy.loading" class="{{statusButtonClass(proxy)}}" data-style="zoom-out" ng-click="startOrStopProxy(proxy)">
+                            <span class="glyphicon glyphicon-play"></span> {{proxyStatus(proxy) || 'unknown'}}
+                        </button>
+                    </td>
+                    <td>
+                        <button class="{{docButtonClass(proxy)}}" ng-click="showProxy(proxy)" ng-disabled="{{docbuttonDisabled(proxy)}}">
+                            <span class="glyphicon glyphicon-wrench"></span>
+                        </button>
+                        <button class="btn btn-danger btn-sm" ng-click="deleteProxy(proxy)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+        </table>
+    </div>
+</div>
