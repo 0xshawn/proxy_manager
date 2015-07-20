@@ -136,7 +136,7 @@ angular.module('proxyManagerApp')
                   }
                 }]
               },
-              data
+              data: data
             }, 'modal-primary', 'app/proxy/proxy.new.html');
 
             newModal.result.then(function (data) {
@@ -153,25 +153,26 @@ angular.module('proxyManagerApp')
               data = proxy,
               newModal;
             newModal = openModal({
-              modal: {
-                dismissable: true,
-                title: 'Configure Your Client',
-                buttons: [{
-                  classes: 'btn-primary',
-                  text: 'Confirm',
-                  click: function (e) {
-                    newModal.close(e);
-                  }
-                }, {
-                  classes: 'btn-default',
-                  text: 'Cancel',
-                  click: function (e) {
-                    newModal.dismiss(e);
-                  }
-                }]
+                modal: {
+                  dismissable: true,
+                  title: 'Configure Your Client',
+                  buttons: [{
+                    classes: 'btn-primary',
+                    text: 'Confirm',
+                    click: function (e) {
+                      newModal.close(e);
+                    }
+                  }, {
+                    classes: 'btn-default',
+                    text: 'Cancel',
+                    click: function (e) {
+                      newModal.dismiss(e);
+                    }
+                  }]
+                },
+                data: data
               },
-              data
-            }, 'modal-primary', 'app/proxy/proxy.show.html');
+              'modal-primary', 'app/proxy/proxy.show.html');
 
             newModal.result.then(function (data) {});
           };
