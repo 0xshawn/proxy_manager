@@ -29,9 +29,13 @@ exports.index = function (req, res) {
 // get proxies of me
 exports.me = function (req, res) {
   var userId = req.user._id;
-  Proxy.find({
-    owner: userId
-  }, function (err, proxies) {
+  var queryParams = {};
+  if (auth.hasRole('admin') === false) {
+    queryParams = {
+      owner: userId
+    };
+  }
+  Proxy.find(queryParams, function (err, proxies) {
     if (err) {
       return handleError(res, err);
     }
