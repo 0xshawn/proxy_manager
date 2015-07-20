@@ -1,4 +1,10 @@
 # Proxy Manager
+version 0.0.1
+
+## prepare
+  npm install
+  bower install
+  npm install forever -g
 
 ## Start script
 ./start script
