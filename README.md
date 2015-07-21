@@ -12,20 +12,21 @@ version 0.0.3
 ## Start script
 ./start script
 
-	#!/bin/bash
-	export PROXY_IP=your-server-ip
-	export IP=127.0.0.1 # With Nginx
-	export NODE_ENV=production
-	export PORT=3000
-	export MONGODB_URI=mongodb://localhost/proxymanager
-	export SESSION_SECRETS=randomString
-	cd dist
-	ln -s ../node_modules .
-	npm start
+  #!/bin/bash
+  export PROXY_IP=your-server-ip
+  export IP=127.0.0.1                                 # With Nginx (optional)
+  export NODE_ENV=production
+  export PORT=3000
+  export MONGODB_URI=mongodb://localhost/proxymanager # specific Mongo host (optional)
+  export SESSION_SECRETS=randomString                 # optional
+  export REGISTER_INVITATION=customInvitation         # prevent unexpected registeration
+  cd dist
+  ln -s ../node_modules .
+  npm start
 
 ./restart script
 
-	pkill node
-	git pull
-	grunt build --force
-	./start
+  pkill node
+  git pull
+  grunt build --force
+  ./start
