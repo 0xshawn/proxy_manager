@@ -1,5 +1,5 @@
 # Proxy Manager
-version 0.0.3
+version 0.1.0
 
 ## prepare
 1. install mongo
